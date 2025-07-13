@@ -4,8 +4,13 @@ import { supabase } from '../../../utils/supabaseClient';
 // Helper to extract owner and repo from GitHub URL
 const extractOwnerAndRepo = (url: string): { owner: string; repo: string } | null => {
   try {
-    const match = url.match(/github\.com\/(.+?)\/(.+?)(?:\/.+)?$/);
+    // Remove trailing ".git" if present
+    const cleanUrl = url.replace(/\.git$/, '');
+
+    // Match GitHub owner and repo
+    const match = cleanUrl.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/|$)/);
     if (!match) return null;
+
     return { owner: match[1], repo: match[2] };
   } catch {
     return null;
