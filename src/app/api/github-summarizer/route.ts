@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     // README content is base64 encoded
     const readmeContent = Buffer.from(data.content, 'base64').toString('utf-8');
     return NextResponse.json({ readme: readmeContent }, { status: 200 });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch README from GitHub' }, { status: 500 });
   }
 } 
