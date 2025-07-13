@@ -13,10 +13,10 @@ export async function POST(req: NextRequest) {
     .select('id')
     .eq('value', apiKey)
     .single();
-
+    
   if (error || !data) {
     return NextResponse.json({ valid: false }, { status: 200 });
   }
-
+  
   return NextResponse.json({ valid: true }, { status: 200 });
 } 
