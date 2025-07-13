@@ -26,7 +26,6 @@ export default function Dashboard() {
   const [newKeyName, setNewKeyName] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
-  const [editValue, setEditValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [visibleKeyId, setVisibleKeyId] = useState<string | null>(null);
@@ -78,7 +77,6 @@ export default function Dashboard() {
   const handleEditKey = (key: ApiKey) => {
     setEditId(key.id);
     setEditName(key.name);
-    setEditValue(key.value);
   };
 
   // Update API key (name only)
@@ -95,7 +93,6 @@ export default function Dashboard() {
     if (data) setApiKeys((prev) => prev.map((key) => key.id === editId ? data[0] : key));
     setEditId(null);
     setEditName("");
-    setEditValue("");
     setLoading(false);
   };
 
@@ -109,12 +106,6 @@ export default function Dashboard() {
     await navigator.clipboard.writeText(value);
     setCopiedKeyId(id);
     setTimeout(() => setCopiedKeyId(null), 1500);
-  };
-
-  // Mask only the part after 'gitingest'
-  const getMaskedValue = (value: string) => {
-    if (!value.startsWith('gitingest')) return '************';
-    return 'gitingest' + '*'.repeat(getSuffix(value).length || 10);
   };
 
   // Get the part after 'gitingest'
