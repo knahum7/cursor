@@ -10,7 +10,7 @@ export default async function DashboardPage() {
     redirect("/api/auth/signin");
   }
   // Fetch all API keys server-side
-  const { data: apiKeys, error } = await supabase.from("api_keys").select("id, name, value");
+  const { data: apiKeys } = await supabase.from("api_keys").select("id, name, value");
   return (
     <ApiKeyDashboardClient apiKeys={apiKeys || []} />
   );
