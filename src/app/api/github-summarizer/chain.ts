@@ -46,5 +46,10 @@ export async function summarizeReadme(readme: string): Promise<ReadmeSummary> {
   } else if (Array.isArray(response.content)) {
     content = response.content.filter((c) => typeof c === 'string').join(' ');
   }
-  return parser.parse(content);
+  try {
+    return parser.parse(content);
+  } catch (err) {
+    console.error("Parsing error:", err);
+    throw new Error("Failed to parse model output");
+  }
 } 
