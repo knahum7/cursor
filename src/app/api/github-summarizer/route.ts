@@ -1,16 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '../../../utils/supabaseClient';
+import { summarizeReadme } from './chain';
 
 // Helper to extract owner and repo from GitHub URL
 const extractOwnerAndRepo = (url: string): { owner: string; repo: string } | null => {
   try {
     // Remove trailing ".git" if present
     const cleanUrl = url.replace(/\.git$/, '');
-
     // Match GitHub owner and repo
     const match = cleanUrl.match(/github\.com\/([^\/]+)\/([^\/]+)(?:\/|$)/);
     if (!match) return null;
-
     return { owner: match[1], repo: match[2] };
   } catch {
     return null;
@@ -70,7 +69,14 @@ export async function POST(req: NextRequest) {
     }
     // README content is base64 encoded
     const readmeContent = Buffer.from(data.content, 'base64').toString('utf-8');
-    return NextResponse.json({ readme: readmeContent }, { status: 200 });
+
+    // Summarize and extract cool facts using the Langchain chain
+    const summaryResult = await summarizeReadme(readmeContent);
+    return NextResponse.json({
+      readme: readmeContent,
+      summary: summaryResult.summary,
+      coolFacts: summaryResult.coolFacts,
+    }, { status: 200 });
   } catch {
     return NextResponse.json({ error: 'Failed to fetch README from GitHub' }, { status: 500 });
   }
