@@ -94,14 +94,6 @@ const ApiKeyDashboardClient = ({ apiKeys: initialApiKeys }: Props) => {
     <div className="p-8 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold">API Key Dashboard</h1>
-        <form action="/api/auth/signout" method="post">
-          <button
-            type="submit"
-            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring"
-          >
-            Sign out
-          </button>
-        </form>
       </div>
       <form onSubmit={handleCreateKey} className="flex gap-2 mb-6" aria-label="Create API Key">
         <input

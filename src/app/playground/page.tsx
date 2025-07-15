@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../utils/supabaseClient";
-import MainLayout from "../MainLayout";
+import MainLayout from "../../components/MainLayout";
 
 const Playground = () => {
   const [apiKey, setApiKey] = useState("");

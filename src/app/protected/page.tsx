@@ -1,5 +1,5 @@
 "use client";
-import MainLayout from "../MainLayout";
+import MainLayout from "../../components/MainLayout";
 
 const ProtectedPage = () => (
   <MainLayout>
