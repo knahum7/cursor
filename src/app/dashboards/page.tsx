@@ -3,6 +3,7 @@ import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import { redirect } from "next/navigation";
 import { supabase } from "../../utils/supabaseClient";
 import ApiKeyDashboardClient from "./ApiKeyDashboardClient";
+import MainLayout from "../MainLayout";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -12,6 +13,8 @@ export default async function DashboardPage() {
   // Fetch all API keys server-side
   const { data: apiKeys } = await supabase.from("api_keys").select("id, name, value");
   return (
-    <ApiKeyDashboardClient apiKeys={apiKeys || []} />
+    <MainLayout>
+      <ApiKeyDashboardClient apiKeys={apiKeys || []} />
+    </MainLayout>
   );
 }
